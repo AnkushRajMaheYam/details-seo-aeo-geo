@@ -20,6 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     navItems.forEach(item => {
         item.addEventListener("click", (e) => {
+            const href = item.getAttribute("href");
+            if (href && href !== "#" && href.endsWith(".html")) {
+                return; // Allow actual page anchors to navigate normally
+            }
+
             e.preventDefault();
             
             // Close mobile menu panel if currently active
@@ -31,9 +36,8 @@ document.addEventListener("DOMContentLoaded", () => {
             navItems.forEach(nav => nav.classList.remove("active"));
             
             // Match structural item classes across navbar links
-            if (item.id === "navHome" || item.id === "navHandbook") {
+            if (item.id === "navHome") {
                 document.getElementById("navHome").classList.add("active");
-                document.getElementById("navHandbook").classList.add("active");
             } else {
                 item.classList.add("active");
             }
