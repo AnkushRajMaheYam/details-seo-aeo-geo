@@ -77,63 +77,63 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     // ==========================================
-    // 2. SIDEBAR NAVIGATION HOOK HYDRATOR
+    // 2. HANDBOOK SIDEBAR HYDRATION ENGINE
     // ==========================================
-    const leftNavTreeRoot = document.getElementById("nav-section");
-    if (leftNavTreeRoot) {
-        partMappingSchema.forEach((partBlock, index) => {
-            const sectionNode = document.createElement("div");
-            sectionNode.className = "nav-part";
-            if (index < 3) sectionNode.classList.add("open"); // Default open initial chapters
+    const navSectionTarget = document.getElementById("nav-section");
+    if (navSectionTarget) {
+        partMappingSchema.forEach((part, idx) => {
+            const partContainer = document.createElement("div");
+            partContainer.className = "nav-part";
+            if (idx < 3) partContainer.classList.add("open");
 
-            const toggleHeader = document.createElement("div");
-            toggleHeader.className = "nav-part-header";
-            toggleHeader.innerHTML = `<span>${partBlock.label}</span><span class="toggle">▶</span>`;
-            toggleHeader.addEventListener("click", () => sectionNode.classList.toggle("open"));
+            const headerNode = document.createElement("div");
+            headerNode.className = "nav-part-header";
+            headerNode.innerHTML = `<span>${part.label}</span><span class="toggle">▶</span>`;
+            headerNode.addEventListener("click", () => partContainer.classList.toggle("open"));
 
-            const chapterLinksBox = document.createElement("div");
-            chapterLinksBox.className = "nav-chapters";
+            const subChaptersBox = document.createElement("div");
+            subChaptersBox.className = "nav-chapters";
 
-            partBlock.chapters.forEach(ch => {
-                const chapterAnchor = document.createElement("a");
-                chapterAnchor.className = "nav-link";
-                chapterAnchor.textContent = ch.title;
-                chapterAnchor.dataset.sidebarLinkTarget = ch.id;
+            part.chapters.forEach(ch => {
+                const chapterAnchorLink = document.createElement("a");
+                chapterAnchorLink.className = "nav-link";
+                chapterAnchorLink.textContent = ch.title;
+                chapterAnchorLink.dataset.handbookSectionLink = ch.id;
 
-                chapterAnchor.addEventListener("click", () => {
-                    const matchedTarget = document.getElementById(ch.id);
-                    if (matchedTarget) {
-                        matchedTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+                chapterAnchorLink.addEventListener("click", () => {
+                    const domTargetNode = document.getElementById(ch.id);
+                    if (domTargetNode) {
+                        domTargetNode.scrollIntoView({ behavior: "smooth", block: "start" });
                     }
                     if (window.innerWidth <= 768) {
                         document.getElementById("sidebar").classList.remove("open");
                     }
                 });
-                chapterLinksBox.appendChild(chapterAnchor);
+                subChaptersBox.appendChild(chapterAnchorLink);
             });
 
-            sectionNode.appendChild(toggleHeader);
-            sectionNode.appendChild(chapterLinksBox);
-            leftNavTreeRoot.appendChild(sectionNode);
+            partContainer.appendChild(headerNode);
+            partContainer.appendChild(subChaptersBox);
+            navSectionTarget.appendChild(partContainer);
         });
     }
 
     // ==========================================
-    // 3. ANALYSIS DIRECTORY TABLE SELECTION FILTER
+    // 3. ANALYSIS COMPILER DIRECTORY SELECTION FILTERS
     // ==========================================
-    const directoryFilters = document.querySelectorAll(".directory-btn");
-    const operationalTableRows = document.querySelectorAll("#directoryTable tbody tr");
+    const selectionFilterButtons = document.querySelectorAll(".directory-btn");
+    const structuralTableRows = document.querySelectorAll("#directoryTable tbody tr");
 
-    directoryFilters.forEach(btn => {
+    selectionFilterButtons.forEach(btn => {
         btn.addEventListener("click", () => {
-            directoryFilters.forEach(b => b.classList.remove("active"));
+            selectionFilterButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
 
-            const currentFilterCriteria = btn.getAttribute("data-filter-cost");
+            const assignedFilterCriteria = btn.getAttribute("data-filter-cost");
 
-            operationalTableRows.forEach(row => {
+            structuralTableRows.forEach(row => {
                 const rowCostType = row.getAttribute("data-cost-type");
-                if (currentFilterCriteria === "all" || rowCostType === currentFilterCriteria) {
+                if (assignedFilterCriteria === "all" || rowCostType === assignedFilterCriteria) {
                     row.style.display = "table-row";
                 } else {
                     row.style.display = "none";
@@ -143,136 +143,145 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ==========================================
-    // 4. SCROLL PROGRESS INDICATOR & ACTIVE STATES
+    // 4. VERTICAL SCROLL MONITORING METRIC SLIDERS
     // ==========================================
-    const headerProgressBar = document.getElementById("progress-bar");
-    const floatingToTopButton = document.getElementById("back-top");
+    const topProgressBarNode = document.getElementById("progress-bar");
+    const globalFloatingReturnButton = document.getElementById("back-top");
 
     window.addEventListener("scroll", () => {
-        const verticalScrollOffset = window.scrollY;
-        const netScrollableDistance = document.documentElement.scrollHeight - window.innerHeight;
-        const progressPercentage = netScrollableDistance > 0 ? verticalScrollOffset / netScrollableDistance : 0;
+        const currentScrollY = window.scrollY;
+        const netScrollableRange = document.documentElement.scrollHeight - window.innerHeight;
+        const finalRatio = netScrollableRange > 0 ? currentScrollY / netScrollableRange : 0;
 
-        if (headerProgressBar) headerProgressBar.style.transform = `scaleX(${progressPercentage})`;
-        if (floatingToTopButton) floatingToTopButton.classList.toggle("show", verticalScrollOffset > 400);
+        if (topProgressBarNode) topProgressBarNode.style.transform = `scaleX(${finalRatio})`;
+        if (globalFloatingReturnButton) globalFloatingReturnButton.classList.toggle("show", currentScrollY > 400);
 
-        // Synchronize active states across sidebar link options during user read paths
-        const activeTextChapters = document.querySelectorAll(".chapter");
-        let activePageSectionId = null;
-        activeTextChapters.forEach(sectionBlock => {
-            if (sectionBlock.getBoundingClientRect().top <= 140) {
-                activePageSectionId = sectionBlock.id;
+        // Highlight active side navigation categories based on scroll metrics
+        const liveChaptersInViewport = document.querySelectorAll(".chapter");
+        let focusedChapterId = null;
+        liveChaptersInViewport.forEach(chBlock => {
+            if (chBlock.getBoundingClientRect().top <= 140) {
+                focusedChapterId = chBlock.id;
             }
         });
 
-        document.querySelectorAll(".nav-link").forEach(linkNode => {
-            linkNode.classList.toggle("active", linkNode.dataset.sidebarLinkTarget === activePageSectionId);
+        document.querySelectorAll(".nav-link").forEach(link => {
+            link.classList.toggle("active", link.dataset.handbookSectionLink === focusedChapterId);
         });
     });
 
     // ==========================================
-    // 5. TECHNICAL REGEX MATCH SELECTION SCANNERS
+    // 5. REGEX INLINE PATTERN SEARCH UTILITIES
     // ==========================================
-    const searchFieldInput = document.getElementById("search-input");
-    if (searchFieldInput) {
-        searchFieldInput.addEventListener("input", function() {
-            const sanitizedSearchString = this.value.trim().toLowerCase();
+    const coreSearchInputBox = document.getElementById("search-input");
+    if (coreSearchInputBox) {
+        coreSearchInputBox.addEventListener("input", function() {
+            const queryValue = this.value.trim().toLowerCase();
 
-            // Clear legacy matches to avoid layout drift
-            document.querySelectorAll("mark").forEach(markNode => {
-                const plainTextNode = document.createTextNode(markNode.textContent);
-                markNode.replaceWith(plainTextNode);
+            document.querySelectorAll("mark").forEach(node => {
+                const normalTextNode = document.createTextNode(node.textContent);
+                node.replaceWith(normalTextNode);
             });
 
-            if (!sanitizedSearchString || sanitizedSearchString.length < 2) return;
+            if (!queryValue || queryValue.length < 2) return;
 
-            const textNodeIterator = document.createTreeWalker(
+            const textTreeWalker = document.createTreeWalker(
                 document.getElementById("content"),
                 NodeFilter.SHOW_TEXT,
                 null
             );
 
-            const targetNodesToHighlight = [];
-            let evaluatedNode;
-            while ((evaluatedNode = textNodeIterator.nextNode())) {
-                if (evaluatedNode.textContent.toLowerCase().includes(sanitizedSearchString)) {
-                    targetNodesToHighlight.push(evaluatedNode);
+            const nodesArrayToOptimize = [];
+            let trackedTextNode;
+            while ((trackedTextNode = textTreeWalker.nextNode())) {
+                if (trackedTextNode.textContent.toLowerCase().includes(queryValue)) {
+                    nodesArrayToOptimize.push(trackedTextNode);
                 }
             }
 
-            targetNodesToHighlight.slice(0, 40).forEach(textNode => {
-                const escapeRegex = new RegExp(`(${sanitizedSearchString.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-                const overlaySpan = document.createElement("span");
-                overlaySpan.innerHTML = textNode.textContent.replace(escapeRegex, "<mark>$1</mark>");
-                textNode.replaceWith(overlaySpan);
+            nodesArrayToOptimize.slice(0, 40).forEach(textNode => {
+                const compileRegex = new RegExp(`(${queryValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                const cleanSpanElement = document.createElement("span");
+                cleanSpanElement.innerHTML = textNode.textContent.replace(compileRegex, "<mark>$1</mark>");
+                textNode.replaceWith(cleanSpanElement);
             });
 
-            const initialMatchOccurrence = document.querySelector("mark");
-            if (initialMatchOccurrence) {
-                initialMatchOccurrence.scrollIntoView({ behavior: "smooth", block: "center" });
+            const initialMarkElement = document.querySelector("mark");
+            if (initialMarkElement) {
+                initialMarkElement.scrollIntoView({ behavior: "smooth", block: "center" });
             }
         });
     }
 
     // ==========================================
-    // 6. CACHING AND INTERACTIVE CHECKLIST ENGINE
+    // 6. LOCAL STORAGE CHECKLIST STATE BUFFER
     // ==========================================
-    window.toggleCheck = function(selectedIconNode) {
-        const parentListItemNode = selectedIconNode.closest("li");
-        parentListItemNode.classList.toggle("done");
+    window.toggleCheck = function(targetIconNode) {
+        const itemRowFrame = targetIconNode.closest("li");
+        itemRowFrame.classList.toggle("done");
 
-        const isMarkedDone = parentListItemNode.classList.contains("done");
-        selectedIconNode.textContent = isMarkedDone ? "✓" : "";
+        const targetStatusCheck = itemRowFrame.classList.contains("done");
+        targetIconNode.textContent = targetStatusCheck ? "✓" : "";
 
-        const targetListIdString = selectedIconNode.closest("ul").id;
-        const itemIndexOffset = Array.from(selectedIconNode.closest("ul").querySelectorAll(".check-icon")).indexOf(selectedIconNode);
-        const persistentCacheKey = `seo_handbook_task_${targetListIdString}_idx_${itemIndexOffset}`;
+        const hostParentListId = targetIconNode.closest("ul").id;
+        const individualItemOffset = Array.from(targetIconNode.closest("ul").querySelectorAll(".check-icon")).indexOf(targetIconNode);
+        const uniqueStorageStringKey = `handbook_pro_cache_${hostParentListId}_node_${individualItemOffset}`;
 
-        localStorage.setItem(persistentCacheKey, isMarkedDone ? "1" : "0");
+        localStorage.setItem(uniqueStorageStringKey, targetStatusCheck ? "1" : "0");
     };
 
-    // Hydrate client state matrices from local storage metrics during initial setup
-    document.querySelectorAll(".checklist").forEach(checklistContainer => {
-        checklistContainer.querySelectorAll(".check-icon").forEach((iconElement, indexOffset) => {
-            const internalStorageKey = `seo_handbook_task_${checklistContainer.id}_idx_${indexOffset}`;
-            if (localStorage.getItem(internalStorageKey) === "1") {
-                const correspondingRowItem = iconElement.closest("li");
-                correspondingRowItem.classList.add("done");
+    // Hydrate state indices from previous user sessions upon document visibility triggers
+    document.querySelectorAll(".checklist").forEach(listWrapper => {
+        listWrapper.querySelectorAll(".check-icon").forEach((iconElement, indexPosition) => {
+            const persistentQueryKey = `handbook_pro_cache_${listWrapper.id}_node_${indexPosition}`;
+            if (localStorage.getItem(persistentQueryKey) === "1") {
+                const parentRowObject = iconElement.closest("li");
+                parentRowObject.classList.add("done");
                 iconElement.textContent = "✓";
             }
         });
     });
 
     // ==========================================
-    // 7. DEVELOPER SOURCE CODE CLIPBOARD SYSTEM
+    // 7. DEVELOPER CLIPBOARD SELECTION INJECTORS
     // ==========================================
-    const copyActionTrigger = document.getElementById("copyCodeBtn");
-    const scriptCodeContainer = document.getElementById("pythonCode");
+    const copyButtonTrigger = document.getElementById("copyCodeBtn");
+    const rawTextCodeSource = document.getElementById("pythonCode");
 
-    if (copyActionTrigger && scriptCodeContainer) {
-        copyActionTrigger.addEventListener("click", () => {
-            navigator.clipboard.writeText(scriptCodeContainer.textContent).then(() => {
-                const originalLabelText = copyActionTrigger.textContent;
-                copyActionTrigger.textContent = "Copied!";
-                copyActionTrigger.style.backgroundColor = "#c4922a";
-                copyActionTrigger.style.color = "#fff";
+    if (copyButtonTrigger && rawTextCodeSource) {
+        copyButtonTrigger.addEventListener("click", () => {
+            navigator.clipboard.writeText(rawTextCodeSource.textContent).then(() => {
+                const defaultLabelString = copyButtonTrigger.textContent;
+                copyButtonTrigger.textContent = "Copied!";
+                copyButtonTrigger.style.backgroundColor = "#c4922a";
+                copyButtonTrigger.style.color = "#fff";
 
                 setTimeout(() => {
-                    copyActionTrigger.textContent = originalLabelText;
-                    copyActionTrigger.style.backgroundColor = "transparent";
-                    copyActionTrigger.style.color = "#a0aec0";
+                    copyButtonTrigger.textContent = defaultLabelString;
+                    copyButtonTrigger.style.backgroundColor = "transparent";
+                    copyButtonTrigger.style.color = "#a0aec0";
                 }, 2000);
             });
         });
     }
 
     // ==========================================
-    // 8. MOBILE DRAWER SLIDER RUNTIME TOGGLE
+    // 8. MOBILE ACTION DRAWER MENU INTERFACE
     // ==========================================
-    const mobileSidebarTrigger = document.getElementById("menu-toggle");
-    if (mobileSidebarTrigger) {
-        mobileSidebarTrigger.addEventListener("click", () => {
+    const drawerToggleButton = document.getElementById("menu-toggle");
+    if (drawerToggleButton) {
+        drawerToggleButton.addEventListener("click", () => {
             document.getElementById("sidebar").classList.toggle("open");
+        });
+    }
+
+    // FIXED GLOBAL STICKY HEADER NAVBAR RESPONSIVE MENU INTERACTION
+    const globalMenuToggle = document.getElementById("globalMenuToggle");
+    const globalNavLinks = document.getElementById("globalNavLinks");
+    if (globalMenuToggle && globalNavLinks) {
+        globalMenuToggle.addEventListener("click", () => {
+            globalNavLinks.classList.toggle("open");
+            globalMenuToggle.classList.toggle("active");
         });
     }
 });

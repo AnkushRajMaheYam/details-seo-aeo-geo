@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Complete SEO, AEO, GEO, AIO, LLMO & Agentic Search Handbook 2026 | Ankush Raj</title>
+    <title>The Complete SEO, AEO, GEO, AIO, LLMO &amp; Agentic Search Handbook 2026 | Ankush Raj</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,12 +14,15 @@
     <nav class="global-navbar">
         <div class="nav-brand-group">
             <span class="nav-logo-text">SEO<span class="dot">·</span>Engine</span>
-            <span class="nav-version">v2026.2.0</span>
+            <span class="nav-version">v2026.2.6</span>
         </div>
-        <ul class="global-nav-links">
+        <button class="global-menu-toggle" id="globalMenuToggle" aria-label="Toggle Global Navigation Menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="global-nav-links" id="globalNavLinks">
             <li><a href="index.html" class="global-nav-item">Home</a></li>
             <li><a href="seo-handbook.html" class="global-nav-item active">SEO Handbook</a></li>
-            <li><a href="index.html#about-section" class="global-nav-item">About</a></li>
+            <li><a href="about.html" class="global-nav-item">About</a></li>
         </ul>
     </nav>
 
@@ -105,20 +108,6 @@
                     <div class="callout-label">⚡ 2026 Reality Check</div>
                     <p>Zero-click searches are projected to reach <strong>75%</strong>. Google AI Mode shows only <strong>3 citations</strong> instead of 10 blue links. ChatGPT serves <strong>800M+ weekly users</strong>. Traditional SEO traffic is declining 35% as AI answers replace clicks. Your strategy must evolve beyond rankings.</p>
                 </div>
-
-                <h3>Key Terminology: Modern Search</h3>
-                <div class="table-wrap">
-                    <table>
-                        <thead><tr><th>Term</th><th>Full Form</th><th>Definition</th></tr></thead>
-                        <tbody>
-                            <tr><td>SEO</td><td>Search Engine Optimization</td><td>Improving a website so it ranks higher on Google and other search engines</td></tr>
-                            <tr><td>AEO</td><td>Answer Engine Optimization</td><td>Making content that directly answers questions for voice search, featured snippets, AI assistants</td></tr>
-                            <tr><td>GEO</td><td>Generative Engine Optimization</td><td>Optimizing content so AI tools like ChatGPT and Gemini can find, understand, and use it in answers</td></tr>
-                            <tr><td>AIO</td><td>AI Optimization</td><td>Broader optimization for the AI search ecosystem including RAG systems and AI crawlers</td></tr>
-                            <tr><td>LLMO</td><td>Large Language Model Optimization</td><td>Making content easy for LLMs to access, understand, and trust through clear structure and citations</td></tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
 
             <div class="chapter" id="ch2" data-part="1" data-title="How Search Engines Work">
@@ -131,18 +120,12 @@
                 <div class="sop">
                     <div class="sop-header">🔄 Search Engine Processing Pipeline</div>
                     <div class="sop-body">
-                        <div class="sop-step"><div class="sop-num">1</div><div class="sop-text"><strong>Crawling</strong> — Googlebot discovers URLs via sitemaps, internal links, and backlinks. It fetches page HTML using an HTTP GET request. Crawl budget is finite: large sites must prioritize important pages.</div></div>
-                        <div class="sop-step"><div class="sop-num">2</div><div class="sop-text"><strong>Rendering</strong> — Google processes the page's HTML, CSS, and JavaScript to see what users actually see. JavaScript-rendered content may be deferred to a second rendering wave, causing indexing delays.</div></div>
-                        <div class="sop-step"><div class="sop-num">3</div><div class="sop-text"><strong>Indexing</strong> — Content is analyzed, language detected, entities extracted, and the page is stored in Google's index. Duplicate content is consolidated via canonicalization. Not all crawled pages are indexed.</div></div>
-                        <div class="sop-step"><div class="sop-num">4</div><div class="sop-text"><strong>Ranking</strong> — When a query is issued, Google's ranking systems (RankBrain, BERT, MUM, etc.) score indexed pages on 200+ signals including relevance, authority, freshness, and user experience.</div></div>
-                        <div class="sop-step"><div class="sop-num">5</div><div class="sop-text"><strong>Results Delivery</strong> — Google assembles the SERP: organic results, featured snippets, AI Overviews, PAA boxes, local packs, image carousels, and more. Rich results require structured data.</div></div>
+                        <div class="sop-step"><div class="sop-num">1</div><div class="sop-text"><strong>Crawling</strong> — Googlebot discovers URLs via sitemaps, internal links, and backlinks. It fetches page HTML using an HTTP GET request.</div></div>
+                        <div class="sop-step"><div class="sop-num">2</div><div class="sop-text"><strong>Rendering</strong> — Google processes the page's HTML, CSS, and JavaScript to see what users actually see.</div></div>
+                        <div class="sop-step"><div class="sop-num">3</div><div class="sop-text"><strong>Indexing</strong> — Content is analyzed, language detected, entities extracted, and the page is stored in Google's index.</div></div>
+                        <div class="sop-step"><div class="sop-num">4</div><div class="sop-text"><strong>Ranking</strong> — Systems like RankBrain, BERT, and MUM score indexed pages based on intent matching and quality signals.</div></div>
+                        <div class="sop-step"><div class="sop-num">5</div><div class="sop-text"><strong>Results Delivery</strong> — Google populates the SERP with standard positions, PAA windows, and conversational summary blocks.</div></div>
                     </div>
-                </div>
-
-                <h3>Crawl Budget Optimization</h3>
-                <div class="callout gold">
-                    <div class="callout-label">💡 Key Principle</div>
-                    <p>Crawl budget matters for sites with 10,000+ pages. Google won't crawl everything equally. Maximize budget by: blocking low-value pages via robots.txt, fixing crawl errors promptly, eliminating redirect chains, keeping sitemaps clean, and improving server response times (TTFB under 200ms).</p>
                 </div>
             </div>
 
@@ -150,8 +133,7 @@
                 <div class="part-label">Part 1 — SEO Foundations</div>
                 <div class="chapter-num">Chapter 3</div>
                 <h2 class="chapter-title">Google Ranking Systems</h2>
-                <p>Google does not use a single algorithm — it runs dozens of interconnected systems simultaneously. Understanding each helps you optimize effectively.</p>
-                <p>Modern engines deploy advanced AI models like RankBrain, BERT, and MUM to capture semantic synonyms and contextual relationships within text passages rather than matching strict exact-match keyword occurrences.</p>
+                <p>Google runs dozens of interconnected deep algorithms like RankBrain for behavioral synonyms, BERT for preposition contexts, MUM for multimodal assets, and site-wide quality models to block low-value content loops.</p>
             </div>
 
             <div class="chapter" id="ch4" data-part="2" data-title="Keyword Research">
@@ -171,7 +153,7 @@
                 </div>
             </div>
 
-            <div class="chapter" id="ch5" data-part="2" data-title="Content Optimization &amp; E-E-A-T">
+            <div class="chapter" id="ch5" data-part="2" data-title="Content Optimization Models">
                 <div class="part-label">Part 2 — On-Page SEO</div>
                 <div class="chapter-num">Chapter 5</div>
                 <h2 class="chapter-title">Content Optimization &amp; E-E-A-T</h2>
@@ -184,7 +166,7 @@
                 </div>
             </div>
 
-            <div class="chapter" id="ch6" data-part="2" data-title="Title Tags &amp; Meta Descriptions">
+            <div class="chapter" id="ch6" data-part="2" data-title="Title &amp; Meta Configurations">
                 <div class="part-label">Part 2 — On-Page SEO</div>
                 <div class="chapter-num">Chapter 6</div>
                 <h2 class="chapter-title">Title Tags &amp; Meta Descriptions</h2>
@@ -198,7 +180,7 @@
                 <p>Technical parameters handle indexing controls and crawl allocations, verifying that search engine spiders can efficiently discover site paths without triggering error codes.</p>
             </div>
 
-            <div class="chapter" id="ch18" data-part="3" data-title="Core Web Vitals (LCP/INP/CLS)">
+            <div class="chapter" id="ch18" data-part="3" data-title="Core Web Vitals Framework">
                 <div class="part-label">Part 3 — Technical SEO</div>
                 <div class="chapter-num">Chapter 18</div>
                 <h2 class="chapter-title">Core Web Vitals</h2>
@@ -210,21 +192,21 @@
                 <p>Optimize loading stability and script processing by using modern formats like WebP for media files and deferring non-essential JavaScript elements to speed up page rendering.</p>
             </div>
 
-            <div class="chapter" id="ch21" data-part="4" data-title="Link Building &amp; E-E-A-T">
+            <div class="chapter" id="ch21" data-part="4" data-title="Link Building Ecosystems">
                 <div class="part-label">Part 4 — Off-Page SEO</div>
                 <div class="chapter-num">Chapter 21</div>
                 <h2 class="chapter-title">Link Building &amp; E-E-A-T</h2>
                 <p>Earning high-quality backlinks from relevant sites establishes brand authority and confirms the authority signals of your informational blog platform network.</p>
             </div>
 
-            <div class="chapter" id="ch25" data-part="5" data-title="Google Business Profile &amp; Local SEO">
+            <div class="chapter" id="ch25" data-part="5" data-title="Google Business Optimization">
                 <div class="part-label">Part 5 — Local SEO</div>
                 <div class="chapter-num">Chapter 25</div>
                 <h2 class="chapter-title">Local SEO &amp; Google Business Profile</h2>
                 <p>Optimizing your local business map visibility relies on matching name, address, and phone numbers (NAP data consistency) across all digital indexes and platforms.</p>
             </div>
 
-            <div class="chapter" id="ch28" data-part="6" data-title="Structured Data &amp; Schema Markup">
+            <div class="chapter" id="ch28" data-part="6" data-title="Structured Data Engineering">
                 <div class="part-label">Part 6 — Schema &amp; Structured Data</div>
                 <div class="chapter-num">Chapter 28–36</div>
                 <h2 class="chapter-title">Structured Data &amp; Schema Markup</h2>
@@ -235,7 +217,7 @@
                 </div>
             </div>
 
-            <div class="chapter" id="ch37" data-part="7" data-title="Answer Engine Optimization">
+            <div class="chapter" id="ch37" data-part="7" data-title="Answer Engine Frameworks">
                 <div class="part-label">Part 7 — AEO (Answer Engine Optimization)</div>
                 <div class="chapter-num">Chapter 37–42</div>
                 <h2 class="chapter-title">Answer Engine Optimization (AEO)</h2>
@@ -260,56 +242,56 @@
                 </div>
             </div>
 
-            <div class="chapter" id="ch48" data-part="9" data-title="AI Optimization &amp; RAG">
+            <div class="chapter" id="ch48" data-part="9" data-title="AI Search Optimization &amp; RAG">
                 <div class="part-label">Part 9 — AIO (AI Optimization)</div>
                 <div class="chapter-num">Chapter 48–52</div>
                 <h2 class="chapter-title">AI Optimization &amp; RAG</h2>
                 <p>Most AI search engines run on RAG structures, scraping real-time data from web indices to answer complex user queries. Ensuring text fields are easily crawlable allows bots to parse and cite your pages.</p>
             </div>
 
-            <div class="chapter" id="ch53" data-part="10" data-title="LLM Optimization">
+            <div class="chapter" id="ch53" data-part="10" data-title="Large Language Model Tuning">
                 <div class="part-label">Part 10 — LLM Optimization (LLMO)</div>
                 <div class="chapter-num">Chapter 53–58</div>
-                <h2 class="chapter-title">LLM Optimization (LLMO)</h2>
+                <h2 class="chapter-title">Large Language Model Optimization (LLMO)</h2>
                 <p>LLM engines prioritize factual accuracy, content freshness, and domain authority when selecting text snippets to generate conversational answers.</p>
             </div>
 
-            <div class="chapter" id="ch59" data-part="11" data-title="llms.txt &amp; AI Accessibility">
+            <div class="chapter" id="ch59" data-part="11" data-title="The llms.txt Interface">
                 <div class="part-label">Part 11 — llms.txt &amp; llms-full.txt</div>
                 <div class="chapter-num">Chapter 59–64</div>
                 <h2 class="chapter-title">llms.txt &amp; AI Content Accessibility</h2>
                 <p>Placing an optimized <code>llms.txt</code> file at your domain root guides modern AI crawler bots to your most important landing pages and explains your site structure clearly.</p>
             </div>
 
-            <div class="chapter" id="ch65" data-part="12" data-title="Agentic SEO">
+            <div class="chapter" id="ch65" data-part="12" data-title="Agentic Search Systems">
                 <div class="part-label">Part 12 — Agentic SEO</div>
                 <div class="chapter-num">Chapter 65–70</div>
                 <h2 class="chapter-title">Agentic SEO</h2>
-                <p>Agentic search focuses on optimizing web content for autonomous AI agents that browse, process data, and complete tasks on behalf of users without manual human steering loops.</p>
+                <p>Agentic search refers to optimization for autonomous software systems that can plan and complete complex multi-variant tasks without requiring direct human step management loops.</p>
             </div>
 
-            <div class="chapter" id="ch71" data-part="13" data-title="Optimizing for AI Platforms">
+            <div class="chapter" id="ch71" data-part="13" data-title="Optimizing for AI surfaces">
                 <div class="part-label">Part 13 — AI Search Platforms</div>
                 <div class="chapter-num">Chapter 71–76</div>
                 <h2 class="chapter-title">Optimizing for Each AI Platform</h2>
                 <p>To win citations across different engines, tailor your technical structure to their web-sourcing pathways: optimize for Bing to capture ChatGPT traffic, and rank organically in Google to win AI Overview placements.</p>
             </div>
 
-            <div class="chapter" id="ch77" data-part="14" data-title="Knowledge Graphs &amp; Entity Engineering">
+            <div class="chapter" id="ch77" data-part="14" data-title="Knowledge Graph Integration">
                 <div class="part-label">Part 14 — Knowledge Graphs &amp; Entity Engineering</div>
                 <div class="chapter-num">Chapter 77–81</div>
                 <h2 class="chapter-title">Knowledge Graphs &amp; Entity Engineering</h2>
-                <p>Moving from basic keyword matching to explicit entity mapping connects your brand node directly within major search engine knowledge database networks.</p>
+                <p>Transitioning from basic keyword matching to explicit entity mapping connects your brand node directly within major search engine knowledge database networks.</p>
             </div>
 
-            <div class="chapter" id="ch82" data-part="15" data-title="AI Crawlers &amp; Discovery">
+            <div class="chapter" id="ch82" data-part="15" data-title="AI Crawler Management">
                 <div class="part-label">Part 15 — AI Crawlers &amp; Discovery</div>
                 <div class="chapter-num">Chapter 82–87</div>
                 <h2 class="chapter-title">AI Crawlers &amp; Discovery Systems</h2>
                 <p>Ensure that specialized AI crawlers like GPTBot and ClaudeBot have open access within your robots.txt file to allow them to fetch and cite your content pages.</p>
             </div>
 
-            <div class="chapter" id="ch88" data-part="16" data-title="Complete Google Update History">
+            <div class="chapter" id="ch88" data-part="16" data-title="Complete Update History">
                 <div class="part-label">Part 16 — Algorithm Updates</div>
                 <div class="chapter-num">Chapter 88–100</div>
                 <h2 class="chapter-title">Complete Google Algorithm Update History</h2>
@@ -330,7 +312,7 @@
                 <p>Transition your reporting priorities from volatile monthly organic sessions to stable, future-proof metrics like brand share of voice and total AI citation mentions.</p>
             </div>
 
-            <div class="chapter" id="ch118" data-part="19" data-title="Implementation Frameworks &amp; Checklists">
+            <div class="chapter" id="ch118" data-part="19" data-title="Operational SOP Checklists">
                 <div class="part-label">Part 19 — Implementation Frameworks</div>
                 <div class="chapter-num">Chapter 118–123</div>
                 <h2 class="chapter-title">Audit Frameworks &amp; SOPs</h2>
@@ -346,7 +328,7 @@
                 </ul>
             </div>
 
-            <div class="chapter" id="ch124" data-part="20" data-title="Future of Search 2026–2030">
+            <div class="chapter" id="ch124" data-part="20" data-title="Server Automation Shell">
                 <div class="part-label">Part 20 — Future of Search</div>
                 <div class="chapter-num">Chapter 124–129</div>
                 <h2 class="chapter-title">Future of Search: 2026–2030</h2>
